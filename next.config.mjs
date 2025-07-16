@@ -19,25 +19,7 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
     prependData: `@import "variables"; @import "mixins";`,
   },
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.scss$/,
-      use: [
-        'style-loader',
-        'css-loader',
-        {
-          loader: 'sass-loader',
-          options: {
-            sassOptions: {
-              includePaths: [path.join(__dirname, 'styles')],
-            },
-          },
-        },
-      ],
-    });
-
-    return config;
-  },
+  // Custom webpack SCSS loader olib tashlandi, Next.js default SCSS loader ishlatiladi
 }
 
 export default nextConfig

@@ -2,6 +2,21 @@
 @import 'variables';
 @import 'mixins';
 
+:root {
+  --star-active: #f59e0b;
+  --star-inactive: #e5e7eb;
+  --info-bg: var(--muted);
+  --info-border: var(--border);
+  --error-bg: #fef2f2;
+  --error-border: #fecaca;
+  --error-text: #dc2626;
+  --error-icon: #ef4444;
+  --success-bg: #f0fdf4;
+  --success-border: #bbf7d0;
+  --success-text: #16a34a;
+  --success-icon: #22c55e;
+}
+
 // Base styles
 *,
 *::before,

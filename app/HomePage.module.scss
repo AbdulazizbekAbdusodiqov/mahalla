@@ -1,5 +1,4 @@
-@use "@/styles/variables" as *;
-
+@import "../styles/_variables.scss";
 .root {
   min-height: 100vh;
   background-color: #f9fafb;

@@ -1,10 +1,10 @@
+import styles from "./HomePage.module.scss"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { MapPin, Clock, Users, TrendingUp, Phone, Mail, ExternalLink } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import styles from "./HomePage.module.scss"
 
 export default function HomePage() {
   const recentProblems = [
