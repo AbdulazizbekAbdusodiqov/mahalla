@@ -11,6 +11,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Upload, MapPin, Camera } from "lucide-react"
 import Link from "next/link"
+import styles from "./SendProblemPage.module.scss"
+import path from 'path';
 
 export default function SendProblemPage() {
   const [dragActive, setDragActive] = useState(false)
@@ -73,15 +75,15 @@ export default function SendProblemPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={styles.root}>
       {/* Navbar */}
-      <nav className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-2xl font-bold text-blue-600">
+      <nav className={styles.navbar}>
+        <div className={styles.container}>
+          <div className={styles.flexBetween}>
+            <Link href="/" className={styles.logo}>
               MahallaPlatform
             </Link>
-            <div className="flex items-center space-x-4">
+            <div className={styles.flexItems}>
               <Link href="/my-problems">
                 <Button variant="outline">Mening arizalarim</Button>
               </Link>
@@ -91,10 +93,10 @@ export default function SendProblemPage() {
         </div>
       </nav>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Muammo yuborish</h1>
-          <p className="text-gray-600">Mahallangizda mavjud muammoni bildiring</p>
+      <div className={styles.container}>
+        <div className={styles.mb8}>
+          <h1 className={styles.title}>Muammo yuborish</h1>
+          <p className={styles.subtitle}>Mahallangizda mavjud muammoni bildiring</p>
         </div>
 
         <Card>
@@ -102,13 +104,13 @@ export default function SendProblemPage() {
             <CardTitle>Ariza ma'lumotlari</CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <form onSubmit={handleSubmit} className={styles.spaceY6}>
+              <div className={styles.gridCols2}>
                 {/* Left Column */}
-                <div className="space-y-6">
+                <div className={styles.spaceY6}>
                   <div>
                     <Label htmlFor="title">Muammo sarlavhasi *</Label>
-                    <Input id="title" placeholder="Muammo sarlavhasini kiriting" required className="mt-1" />
+                    <Input id="title" placeholder="Muammo sarlavhasini kiriting" required className={styles.mt1} />
                   </div>
 
                   <div>
@@ -118,14 +120,14 @@ export default function SendProblemPage() {
                       placeholder="Muammo haqida batafsil ma'lumot bering"
                       rows={4}
                       required
-                      className="mt-1"
+                      className={styles.mt1}
                     />
                   </div>
 
                   <div>
                     <Label htmlFor="neighborhood">Mahalla tanlash *</Label>
                     <Select required>
-                      <SelectTrigger className="mt-1">
+                      <SelectTrigger className={styles.mt1}>
                         <SelectValue placeholder="Mahallani tanlang" />
                       </SelectTrigger>
                       <SelectContent>
@@ -140,41 +142,39 @@ export default function SendProblemPage() {
                 </div>
 
                 {/* Right Column */}
-                <div className="space-y-6">
+                <div className={styles.spaceY6}>
                   <div>
                     <Label>Rasm yuklash</Label>
                     <div
-                      className={`mt-1 border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
-                        dragActive ? "border-blue-500 bg-blue-50" : "border-gray-300"
-                      }`}
+                      className={`${styles.mt1} ${styles.borderDashed} ${styles.roundedLg} ${styles.p6} ${styles.textCenter} ${styles.transitionColors} ${dragActive ? styles.borderBlue : styles.borderGray}`}
                       onDragEnter={handleDrag}
                       onDragLeave={handleDrag}
                       onDragOver={handleDrag}
                       onDrop={handleDrop}
                     >
-                      <Camera className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                      <p className="text-gray-600 mb-2">Rasmlarni bu yerga sudrab olib keling yoki</p>
+                      <Camera className={`${styles.w12} ${styles.textGray400} ${styles.mxAuto} ${styles.mb4}`} />
+                      <p className={`${styles.textGray600} ${styles.mb2}`}>Rasmlarni bu yerga sudrab olib keling yoki</p>
                       <input
                         type="file"
                         multiple
                         accept="image/*"
                         onChange={handleFileInput}
-                        className="hidden"
+                        className={styles.hidden}
                         id="file-upload"
                       />
                       <label htmlFor="file-upload">
-                        <Button type="button" variant="outline" className="cursor-pointer bg-transparent">
-                          <Upload className="w-4 h-4 mr-2" />
+                        <Button type="button" variant="outline" className={`${styles.cursorPointer} ${styles.bgTransparent}`}>
+                          <Upload className={`${styles.w4} ${styles.mr2}`} />
                           Fayl tanlash
                         </Button>
                       </label>
                     </div>
 
                     {files.length > 0 && (
-                      <div className="mt-4 space-y-2">
+                      <div className={`${styles.mt4} ${styles.spaceY2}`}>
                         {files.map((file, index) => (
-                          <div key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded">
-                            <span className="text-sm text-gray-600">{file.name}</span>
+                          <div key={index} className={`${styles.flexItems} ${styles.justifyBetween} ${styles.bgGray50} ${styles.p2} ${styles.rounded}`}>
+                            <span className={`${styles.textSm} ${styles.textGray600}`}>{file.name}</span>
                             <Button type="button" variant="ghost" size="sm" onClick={() => removeFile(index)}>
                               O'chirish
                             </Button>
@@ -186,30 +186,30 @@ export default function SendProblemPage() {
 
                   <div>
                     <Label htmlFor="location">Lokatsiya</Label>
-                    <div className="mt-1 flex space-x-2">
+                    <div className={`${styles.mt1} ${styles.flexItems} ${styles.spaceX2}`}>
                       <Input
                         id="location"
                         placeholder="Lokatsiya koordinatalari"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
-                        className="flex-1"
+                        className={styles.flex1}
                       />
                       <Button type="button" variant="outline" onClick={getCurrentLocation}>
-                        <MapPin className="w-4 h-4" />
+                        <MapPin className={styles.w4} />
                       </Button>
                     </div>
-                    <p className="text-sm text-gray-500 mt-1">GPS tugmasini bosib joriy lokatsiyangizni aniqlang</p>
+                    <p className={`${styles.textSm} ${styles.textGray500} ${styles.mt1}`}>GPS tugmasini bosib joriy lokatsiyangizni aniqlang</p>
                   </div>
                 </div>
               </div>
 
-              <div className="flex justify-end space-x-4 pt-6 border-t">
+              <div className={`${styles.flexEnd} ${styles.spaceX4} ${styles.pt6} ${styles.borderT}`}>
                 <Link href="/">
                   <Button type="button" variant="outline">
                     Bekor qilish
                   </Button>
                 </Link>
-                <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+                <Button type="submit" className={styles.bgBlue600}>
                   Ariza yuborish
                 </Button>
               </div>

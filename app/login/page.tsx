@@ -1,63 +1,101 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import Link from "next/link"
+import styles from "./LoginPage.module.scss"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [role, setRole] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
-    // Simple role-based redirect logic
-    switch (role) {
-      case "admin":
-        window.location.href = "/admin"
-        break
-      case "mahalla":
-        window.location.href = "/mahalla"
-        break
-      case "citizen":
-      default:
-        window.location.href = "/"
-        break
+    setError(null)
+    
+    if (!email || !password || !role) {
+      setError("Iltimos, barcha maydonlarni to'ldiring")
+      return
+    }
+    
+    setIsLoading(true)
+    
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500))
+      
+      // In a real app, you would make an API call here
+      // const response = await fetch('/api/auth/login', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email, password, role })
+      // })
+      // const data = await response.json()
+      // if (!response.ok) throw new Error(data.message || 'Xatolik yuz berdi')
+      
+      // For demo purposes, just redirect based on role
+      switch (role) {
+        case "admin":
+          router.push("/admin")
+          break
+        case "mahalla":
+          router.push("/mahalla")
+          break
+        case "citizen":
+        default:
+          router.push("/")
+          break
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Xatolik yuz berdi')
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <Link href="/" className="text-3xl font-bold text-blue-600">
+    <div className={styles.loginContainer}>
+      <div className={styles.loginWrapper}>
+        <div className={styles.header}>
+          <Link href="/" className={styles.logo}>
             MahallaPlatform
           </Link>
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">Tizimga kirish</h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <h2 className={styles.title}>Tizimga kirish</h2>
+          <p className={styles.subtitle}>
             Hisobingizga kiring yoki{" "}
-            <Link href="/register" className="font-medium text-blue-600 hover:text-blue-500">
+            <Link href="/register" className={styles.link}>
               ro'yxatdan o'ting
             </Link>
           </p>
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Kirish</CardTitle>
-            <CardDescription>Email va parolingizni kiriting</CardDescription>
+        <Card className={styles.card}>
+          <CardHeader className={styles.cardHeader}>
+            <CardTitle className={styles.cardTitle}>Kirish</CardTitle>
+            <CardDescription className={styles.cardDescription}>
+              Email va parolingizni kiriting
+            </CardDescription>
           </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <Label htmlFor="email">Email manzil</Label>
+          <CardContent className={styles.cardContent}>
+            {error && (
+              <div className={styles.error}>
+                {error}
+              </div>
+            )}
+            
+            <form onSubmit={handleSubmit} className={styles.form}>
+              <div className={styles.formGroup}>
+                <Label htmlFor="email" className={styles.label}>Email manzil</Label>
                 <Input
                   id="email"
                   type="email"
@@ -65,12 +103,13 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="mt-1"
+                  className={styles.input}
+                  disabled={isLoading}
                 />
               </div>
 
-              <div>
-                <Label htmlFor="password">Parol</Label>
+              <div className={styles.formGroup}>
+                <Label htmlFor="password" className={styles.label}>Parol</Label>
                 <Input
                   id="password"
                   type="password"
@@ -78,14 +117,20 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="mt-1"
+                  className={styles.input}
+                  disabled={isLoading}
                 />
               </div>
 
-              <div>
-                <Label htmlFor="role">Rol</Label>
-                <Select value={role} onValueChange={setRole} required>
-                  <SelectTrigger className="mt-1">
+              <div className={styles.formGroup}>
+                <Label htmlFor="role" className={styles.label}>Rol</Label>
+                <Select 
+                  value={role} 
+                  onValueChange={setRole} 
+                  required
+                  disabled={isLoading}
+                >
+                  <SelectTrigger className={styles.input}>
                     <SelectValue placeholder="Rolingizni tanlang" />
                   </SelectTrigger>
                   <SelectContent>
@@ -96,13 +141,17 @@ export default function LoginPage() {
                 </Select>
               </div>
 
-              <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
-                Kirish
+              <Button 
+                type="submit" 
+                className={styles.submitButton}
+                disabled={isLoading}
+              >
+                {isLoading ? 'Kiritilmoqda...' : 'Kirish'}
               </Button>
             </form>
 
-            <div className="mt-4 text-center">
-              <Link href="/register" className="text-sm text-blue-600 hover:text-blue-500">
+            <div className={styles.footer}>
+              <Link href="/register" className={styles.link}>
                 Hisobingiz yo'qmi? Ro'yxatdan o'ting
               </Link>
             </div>

@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { MapPin, Clock, Search, Filter, CheckCircle, XCircle, Eye } from "lucide-react"
 import Image from "next/image"
+import styles from "./MahallaPage.module.scss"
 
 export default function MahallaPanel() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -80,16 +81,16 @@ export default function MahallaPanel() {
   const acceptedProblems = problems.filter((p) => p.accepted)
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={styles.root}>
       {/* Navbar */}
-      <nav className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-blue-600">Mahalla Paneli</h1>
-              <Badge className="ml-4 bg-blue-100 text-blue-800">Chilonzor 5-mahalla</Badge>
+      <nav className={styles.navbar}>
+        <div className={styles.container}>
+          <div className={styles.flexBetween}>
+            <div className={styles.flexItems}>
+              <h1 className={styles.logo}>Mahalla Paneli</h1>
+              <Badge className={styles.badgeBlue}>Chilonzor 5-mahalla</Badge>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className={styles.flexItems}>
               <Button variant="outline">Statistika</Button>
               <Button variant="ghost">Chiqish</Button>
             </div>
@@ -97,69 +98,69 @@ export default function MahallaPanel() {
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Mahalla boshqaruv paneli</h1>
-          <p className="text-gray-600">Kelib tushgan arizalarni ko'rib chiqing va boshqaring</p>
+      <div className={styles.container}>
+        <div className={styles.mb8}>
+          <h1 className={styles.title}>Mahalla boshqaruv paneli</h1>
+          <p className={styles.subtitle}>Kelib tushgan arizalarni ko'rib chiqing va boshqaring</p>
         </div>
 
-        <Tabs defaultValue="new" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
+        <Tabs defaultValue="new" className={styles.tabsSpaceY6}>
+          <TabsList className={styles.tabsListGrid}>
             <TabsTrigger value="new">Yangi arizalar ({newProblems.length})</TabsTrigger>
             <TabsTrigger value="accepted">Qabul qilingan ({acceptedProblems.length})</TabsTrigger>
             <TabsTrigger value="all">Barcha arizalar ({problems.length})</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="new" className="space-y-6">
+          <TabsContent value="new" className={styles.tabsSpaceY6}>
             <Card>
               <CardHeader>
                 <CardTitle>Yangi kelib tushgan arizalar</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className={styles.spaceY2}>
                   {newProblems.map((problem) => (
-                    <div key={problem.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                      <div className="flex gap-4">
+                    <div key={problem.id} className={`${styles.border} ${styles.rounded} ${styles.p4} ${styles.cardShadow}`}>
+                      <div className={styles.flexItems + " gap-4"}>
                         <div className="w-24 h-24 relative flex-shrink-0">
                           <Image
                             src={problem.image || "/placeholder.svg"}
                             alt={problem.title}
                             fill
-                            className="object-cover rounded"
+                            className={`${styles.objectCover} ${styles.rounded}`}
                           />
                         </div>
                         <div className="flex-1">
-                          <div className="flex justify-between items-start mb-2">
-                            <h3 className="font-semibold text-lg">{problem.title}</h3>
-                            <Badge className={`${getStatusColor(problem.status)} text-white`}>{problem.status}</Badge>
+                          <div className={styles.flexBetween + " " + styles.mb2}>
+                            <h3 className={styles.fontSemibold + " " + styles.textLg}>{problem.title}</h3>
+                            <Badge className={`${styles.statusBadge} ${problem.status === "Hal qilindi" ? styles.statusGreen : problem.status === "Jarayonda" ? styles.statusYellow : problem.status === "Yangi" ? styles.statusBlue : styles.statusGray}`}>{problem.status}</Badge>
                           </div>
-                          <p className="text-gray-600 mb-2">{problem.description}</p>
-                          <div className="flex items-center text-sm text-gray-500 mb-2">
-                            <MapPin className="w-4 h-4 mr-1" />
+                          <p className={styles.textGray600 + " " + styles.mb2}>{problem.description}</p>
+                          <div className={styles.flexItems + " " + styles.textSm + " " + styles.textGray500 + " " + styles.mb2}>
+                            <MapPin className={styles.iconSm} />
                             {problem.location}
                           </div>
-                          <div className="flex items-center text-sm text-gray-500 mb-2">
-                            <Clock className="w-4 h-4 mr-1" />
+                          <div className={styles.flexItems + " " + styles.textSm + " " + styles.textGray500 + " " + styles.mb2}>
+                            <Clock className={styles.iconSm} />
                             {problem.date}
                           </div>
-                          <div className="text-sm text-gray-600 mb-4">
+                          <div className={styles.textSm + " " + styles.textGray600 + " " + styles.mb4}>
                             <strong>Fuqaro:</strong> {problem.citizen} ({problem.phone})
                           </div>
-                          <div className="flex space-x-2">
+                          <div className={styles.flexItems + " space-x-2"}>
                             <Button
                               size="sm"
                               onClick={() => handleAccept(problem.id)}
                               className="bg-green-600 hover:bg-green-700"
                             >
-                              <CheckCircle className="w-4 h-4 mr-1" />
+                              <CheckCircle className={styles.iconSm} />
                               Qabul qilish
                             </Button>
                             <Button size="sm" variant="destructive" onClick={() => handleReject(problem.id)}>
-                              <XCircle className="w-4 h-4 mr-1" />
+                              <XCircle className={styles.iconSm} />
                               Rad etish
                             </Button>
                             <Button size="sm" variant="outline">
-                              <Eye className="w-4 h-4 mr-1" />
+                              <Eye className={styles.iconSm} />
                               Batafsil
                             </Button>
                           </div>
@@ -168,49 +169,49 @@ export default function MahallaPanel() {
                     </div>
                   ))}
                   {newProblems.length === 0 && (
-                    <div className="text-center py-8 text-gray-500">Yangi arizalar yo'q</div>
+                    <div className={styles.textCenter + " " + styles.py8 + " " + styles.textGray500}>Yangi arizalar yo'q</div>
                   )}
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="accepted" className="space-y-6">
+          <TabsContent value="accepted" className={styles.tabsSpaceY6}>
             <Card>
               <CardHeader>
                 <CardTitle>Qabul qilingan arizalar</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className={styles.gridProblems}>
                   {acceptedProblems.map((problem) => (
-                    <Card key={problem.id} className="overflow-hidden">
-                      <div className="aspect-video relative">
+                    <Card key={problem.id} className={styles.cardShadow}>
+                      <div className={styles.aspectVideo}>
                         <Image
                           src={problem.image || "/placeholder.svg"}
                           alt={problem.title}
                           fill
-                          className="object-cover"
+                          className={styles.objectCover}
                         />
                       </div>
                       <CardHeader>
-                        <div className="flex justify-between items-start mb-2">
-                          <CardTitle className="text-lg">{problem.title}</CardTitle>
-                          <Badge className={`${getStatusColor(problem.status)} text-white`}>{problem.status}</Badge>
+                        <div className={styles.flexBetween + " " + styles.mb2}>
+                          <CardTitle className={styles.textLg}>{problem.title}</CardTitle>
+                          <Badge className={`${styles.statusBadge} ${problem.status === "Hal qilindi" ? styles.statusGreen : problem.status === "Jarayonda" ? styles.statusYellow : problem.status === "Yangi" ? styles.statusBlue : styles.statusGray}`}>{problem.status}</Badge>
                         </div>
-                        <p className="text-gray-600 text-sm">{problem.description}</p>
+                        <p className={styles.textGray600 + " " + styles.textSm}>{problem.description}</p>
                       </CardHeader>
                       <CardContent>
-                        <div className="space-y-2 mb-4">
-                          <div className="flex items-center text-sm text-gray-500">
-                            <MapPin className="w-4 h-4 mr-1" />
+                        <div className={styles.spaceY2 + " " + styles.mb4}>
+                          <div className={styles.flexItems + " " + styles.textSm + " " + styles.textGray500}>
+                            <MapPin className={styles.iconSm} />
                             {problem.location}
                           </div>
-                          <div className="flex items-center text-sm text-gray-500">
-                            <Clock className="w-4 h-4 mr-1" />
+                          <div className={styles.flexItems + " " + styles.textSm + " " + styles.textGray500}>
+                            <Clock className={styles.iconSm} />
                             {problem.date}
                           </div>
                         </div>
-                        <Button size="sm" variant="outline" className="w-full bg-transparent">
+                        <Button size="sm" variant="outline" className={styles.wFull + " bg-transparent"}>
                           Holat yangilash
                         </Button>
                       </CardContent>
@@ -221,26 +222,26 @@ export default function MahallaPanel() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="all" className="space-y-6">
+          <TabsContent value="all" className={styles.tabsSpaceY6}>
             {/* Filters */}
             <Card>
-              <CardContent className="pt-6">
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <div className="flex-1">
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <CardContent className={styles.pt6}>
+                <div className={styles.flexColSmRowGap4}>
+                  <div className={styles.flex1}>
+                    <div className={styles.relative}>
+                      <Search className={styles.iconSm} />
                       <Input
                         placeholder="Arizalarni qidirish..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10"
+                        className={styles.pl10}
                       />
                     </div>
                   </div>
-                  <div className="sm:w-48">
+                  <div className={styles.smW48}>
                     <Select value={statusFilter} onValueChange={setStatusFilter}>
                       <SelectTrigger>
-                        <Filter className="w-4 h-4 mr-2" />
+                        <Filter className={styles.iconSm} />
                         <SelectValue placeholder="Holat bo'yicha" />
                       </SelectTrigger>
                       <SelectContent>
@@ -256,41 +257,35 @@ export default function MahallaPanel() {
               </CardContent>
             </Card>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className={styles.gridProblems}>
               {problems.map((problem) => (
-                <Card key={problem.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <div className="aspect-video relative">
+                <Card key={problem.id} className={styles.cardShadow}>
+                  <div className={styles.aspectVideo}>
                     <Image
                       src={problem.image || "/placeholder.svg"}
                       alt={problem.title}
                       fill
-                      className="object-cover"
+                      className={styles.objectCover}
                     />
                   </div>
                   <CardHeader>
-                    <div className="flex justify-between items-start mb-2">
-                      <CardTitle className="text-lg">{problem.title}</CardTitle>
-                      <Badge className={`${getStatusColor(problem.status)} text-white`}>{problem.status}</Badge>
+                    <div className={styles.flexBetween + " " + styles.mb2}>
+                      <CardTitle className={styles.textLg}>{problem.title}</CardTitle>
+                      <Badge className={`${styles.statusBadge} ${problem.status === "Hal qilindi" ? styles.statusGreen : problem.status === "Jarayonda" ? styles.statusYellow : problem.status === "Yangi" ? styles.statusBlue : styles.statusGray}`}>{problem.status}</Badge>
                     </div>
-                    <p className="text-gray-600 text-sm">{problem.description}</p>
+                    <p className={styles.textGray600 + " " + styles.textSm}>{problem.description}</p>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center text-sm text-gray-500">
-                        <MapPin className="w-4 h-4 mr-1" />
+                    <div className={styles.spaceY2 + " " + styles.mb4}>
+                      <div className={styles.flexItems + " " + styles.textSm + " " + styles.textGray500}>
+                        <MapPin className={styles.iconSm} />
                         {problem.location}
                       </div>
-                      <div className="flex items-center text-sm text-gray-500">
-                        <Clock className="w-4 h-4 mr-1" />
+                      <div className={styles.flexItems + " " + styles.textSm + " " + styles.textGray500}>
+                        <Clock className={styles.iconSm} />
                         {problem.date}
                       </div>
-                      <div className="text-sm text-gray-600">
-                        <strong>Fuqaro:</strong> {problem.citizen}
-                      </div>
                     </div>
-                    <Button size="sm" variant="outline" className="w-full bg-transparent">
-                      Batafsil ko'rish
-                    </Button>
                   </CardContent>
                 </Card>
               ))}

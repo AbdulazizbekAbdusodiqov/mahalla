@@ -1,0 +1,137 @@
+// Button variants
+@mixin button-variant($background, $color, $hover-background: darken($background, 7.5%), $hover-color: $color, $active-background: darken($background, 10%), $active-color: $color) {
+  background-color: $background;
+  color: $color;
+
+  &:hover {
+    background-color: $hover-background;
+    color: $hover-color;
+  }
+
+  &:active {
+    background-color: $active-background;
+    color: $active-color;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+// Card styles
+@mixin card() {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: radius();
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+// Form controls
+@mixin form-input() {
+  display: block;
+  width: 100%;
+  padding: spacing(2) spacing(3);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--foreground);
+  background-color: var(--background);
+  background-clip: padding-box;
+  border: 1px solid var(--border);
+  border-radius: radius();
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:focus {
+    border-color: var(--primary);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(var(--primary), 0.25);
+  }
+
+  &::placeholder {
+    color: var(--muted-foreground);
+    opacity: 1;
+  }
+
+  &:disabled,
+  &[readonly] {
+    background-color: var(--muted);
+    opacity: 1;
+  }
+}
+
+// Flex utilities
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+// Responsive mixins
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
+
+// Animation mixins
+@mixin keyframes($animation-name) {
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+@mixin animation($str) {
+  animation: #{$str};
+}
+
+// Text utilities
+@mixin text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin text-multiline-ellipsis($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Scrollbar styling
+@mixin scrollbar($width: 8px, $track: var(--muted), $thumb: var(--muted-foreground)) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb;
+    border-radius: $width / 2;
+
+    &:hover {
+      background: darken($thumb, 10%);
+    }
+  }
+}

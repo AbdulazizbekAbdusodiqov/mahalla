@@ -1,0 +1,158 @@
+// Core variables and mixins
+@import 'variables';
+@import 'mixins';
+
+// Base styles
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-color: var(--border);
+  border-style: solid;
+  border-width: 0;
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  font-family: $font-sans;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  line-height: inherit;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: inherit;
+}
+
+// Apply light theme by default
+:root {
+  @include light-theme;
+}
+
+// Apply dark theme when user's system preference is dark
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include dark-theme;
+  }
+}
+
+// Force light theme
+[data-theme="light"] {
+  @include light-theme;
+}
+
+// Force dark theme
+[data-theme="dark"] {
+  @include dark-theme;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--foreground);
+}
+
+h1 { font-size: 2.25rem; } // 36px
+h2 { font-size: 1.875rem; } // 30px
+h3 { font-size: 1.5rem; }   // 24px
+h4 { font-size: 1.25rem; }  // 20px
+h5 { font-size: 1.125rem; } // 18px
+h6 { font-size: 1rem; }     // 16px
+
+p {
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Utility classes
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+
+  @include respond-to(md) {
+    max-width: 42rem; // 672px
+  }
+
+  @include respond-to(lg) {
+    max-width: 64rem; // 1024px
+  }
+
+  @include respond-to(xl) {
+    max-width: 80rem; // 1280px
+  }
+}
+
+// Text utilities
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+// Flex utilities
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-around { justify-content: space-around; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-1 { flex: 1 1 0%; }
+
+// Spacing utilities
+@each $size, $value in $spacing {
+  .p-#{$size} { padding: $value; }
+  .px-#{$size} { padding-left: $value; padding-right: $value; }
+  .py-#{$size} { padding-top: $value; padding-bottom: $value; }
+  .pt-#{$size} { padding-top: $value; }
+  .pr-#{$size} { padding-right: $value; }
+  .pb-#{$size} { padding-bottom: $value; }
+  .pl-#{$size} { padding-left: $value; }
+  
+  .m-#{$size} { margin: $value; }
+  .mx-#{$size} { margin-left: $value; margin-right: $value; }
+  .my-#{$size} { margin-top: $value; margin-bottom: $value; }
+  .mt-#{$size} { margin-top: $value; }
+  .mr-#{$size} { margin-right: $value; }
+  .mb-#{$size} { margin-bottom: $value; }
+  .ml-#{$size} { margin-left: $value; }
+}
+
+// Border radius utilities
+@each $name, $value in $radius {
+  .rounded-#{$name} { border-radius: $value; }
+  .rounded-t-#{$name} { border-top-left-radius: $value; border-top-right-radius: $value; }
+  .rounded-r-#{$name} { border-top-right-radius: $value; border-bottom-right-radius: $value; }
+  .rounded-b-#{$name} { border-bottom-right-radius: $value; border-bottom-left-radius: $value; }
+  .rounded-l-#{$name} { border-top-left-radius: $value; border-bottom-left-radius: $value; }
+}
+
+// Import components
+// @import 'components/button';
+// @import 'components/card';
+// @import 'components/form';
+// Add more component imports as needed
+
+// Import pages
+// @import 'pages/home';
+// @import 'pages/dashboard';
+// Add more page imports as needed

@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { MapPin, Clock, Search, Filter, Star } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import styles from "./MyProblemsPage.module.scss"
 
 export default function MyProblemsPage() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -84,15 +85,15 @@ export default function MyProblemsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={styles.root}>
       {/* Navbar */}
-      <nav className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-2xl font-bold text-blue-600">
+      <nav className={styles.navbar}>
+        <div className={styles.container}>
+          <div className={styles.flexBetween}>
+            <Link href="/" className={styles.logo}>
               MahallaPlatform
             </Link>
-            <div className="flex items-center space-x-4">
+            <div className={styles.flexItems}>
               <Link href="/send-problem">
                 <Button variant="outline">Yangi ariza</Button>
               </Link>
@@ -102,31 +103,31 @@ export default function MyProblemsPage() {
         </div>
       </nav>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Mening arizalarim</h1>
-          <p className="text-gray-600">Yuborgan arizalaringiz va ularning holati</p>
+      <div className={styles.container}>
+        <div className={styles.mb8}>
+          <h1 className={`${styles.title}`}>Mening arizalarim</h1>
+          <p className={styles.subtitle}>Yuborgan arizalaringiz va ularning holati</p>
         </div>
 
         {/* Filters */}
-        <Card className="mb-6">
-          <CardContent className="pt-6">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+        <Card className={styles.mb6}>
+          <CardContent className={styles.pt6}>
+            <div className={styles.flexColSmRowGap4}>
+              <div className={styles.flex1}>
+                <div className={styles.relative}>
+                  <Search className={styles.iconSm} />
                   <Input
                     placeholder="Arizalarni qidirish..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
+                    className={styles.pl10}
                   />
                 </div>
               </div>
-              <div className="sm:w-48">
+              <div className={styles.smW48}>
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
                   <SelectTrigger>
-                    <Filter className="w-4 h-4 mr-2" />
+                    <Filter className={styles.iconSm} />
                     <SelectValue placeholder="Holat bo'yicha" />
                   </SelectTrigger>
                   <SelectContent>
@@ -142,40 +143,40 @@ export default function MyProblemsPage() {
         </Card>
 
         {/* Problems List */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className={styles.gridProblems}>
           {filteredProblems.map((problem) => (
-            <Card key={problem.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="aspect-video relative">
-                <Image src={problem.image || "/placeholder.svg"} alt={problem.title} fill className="object-cover" />
+            <Card key={problem.id} className={styles.cardShadow}>
+              <div className={styles.aspectVideo}>
+                <Image src={problem.image || "/placeholder.svg"} alt={problem.title} fill className={styles.objectCover} />
               </div>
               <CardHeader>
-                <div className="flex justify-between items-start mb-2">
-                  <CardTitle className="text-lg">{problem.title}</CardTitle>
-                  <Badge className={`${getStatusColor(problem.status)} text-white`}>{problem.status}</Badge>
+                <div className={styles.flexBetween + " " + styles.mb2}>
+                  <CardTitle className={styles.textLg}>{problem.title}</CardTitle>
+                  <Badge className={`${styles.statusBadge} ${problem.status === "Hal qilindi" ? styles.statusGreen : problem.status === "Jarayonda" ? styles.statusYellow : problem.status === "Yangi" ? styles.statusBlue : styles.statusGray}`}>{problem.status}</Badge>
                 </div>
-                <p className="text-gray-600 text-sm">{problem.description}</p>
+                <p className={`${styles.textGray600} ${styles.textSm}`}>{problem.description}</p>
               </CardHeader>
               <CardContent>
-                <div className="space-y-2 mb-4">
-                  <div className="flex items-center text-sm text-gray-500">
-                    <MapPin className="w-4 h-4 mr-1" />
+                <div className={styles.spaceY2 + " " + styles.mb4}>
+                  <div className={`${styles.flexItems} ${styles.textSm} ${styles.textGray500}`}>
+                    <MapPin className={styles.iconSm} />
                     {problem.location}
                   </div>
-                  <div className="flex items-center text-sm text-gray-500">
-                    <Clock className="w-4 h-4 mr-1" />
+                  <div className={`${styles.flexItems} ${styles.textSm} ${styles.textGray500}`}>
+                    <Clock className={styles.iconSm} />
                     {problem.date}
                   </div>
                 </div>
 
                 {problem.status === "Hal qilindi" && (
-                  <div className="border-t pt-4">
+                  <div className={styles.borderT + " " + styles.pt4}>
                     {problem.rating ? (
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Star className="w-4 h-4 mr-1 text-yellow-500" />
+                      <div className={`${styles.flexItems} ${styles.textSm} ${styles.textGray600}`}>
+                        <Star className={styles.iconStar} />
                         Bahoingiz: {problem.rating}/10
                       </div>
                     ) : (
-                      <Button size="sm" variant="outline" onClick={() => handleRating(problem.id)} className="w-full">
+                      <Button size="sm" variant="outline" onClick={() => handleRating(problem.id)} className={styles.wFull}>
                         Hal qilish sifatini baholang
                       </Button>
                     )}
@@ -188,10 +189,10 @@ export default function MyProblemsPage() {
 
         {filteredProblems.length === 0 && (
           <Card>
-            <CardContent className="text-center py-12">
-              <p className="text-gray-500 text-lg">Hech qanday ariza topilmadi</p>
+            <CardContent className={`${styles.textCenter} ${styles.py12}`}>
+              <p className={`${styles.textGray500} ${styles.textLg}`}>Hech qanday ariza topilmadi</p>
               <Link href="/send-problem">
-                <Button className="mt-4">Birinchi arizangizni yuboring</Button>
+                <Button className={styles.mt4}>Birinchi arizangizni yuboring</Button>
               </Link>
             </CardContent>
           </Card>

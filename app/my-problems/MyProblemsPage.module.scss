@@ -1,0 +1,158 @@
+@use "@/styles/variables" as *;
+
+.root {
+  min-height: 100vh;
+  background-color: #f9fafb; /* bg-gray-50 */
+}
+
+.navbar {
+  background-color: #fff; /* bg-white */
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); /* shadow-sm */
+  border-bottom: 1px solid #e5e7eb; /* border-b */
+}
+
+.container {
+  max-width: 72rem; /* max-w-6xl */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: 700; /* font-bold */
+  color: #111827; /* text-gray-900 */
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #4b5563; /* text-gray-600 */
+}
+
+.flexBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2563eb; /* text-blue-600 */
+  text-decoration: none;
+}
+
+.flexItems {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.gridProblems {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  @media (min-width: 1024px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.cardShadow {
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+  &:hover {
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); /* hover:shadow-lg */
+  }
+}
+
+.aspectVideo {
+  position: relative;
+  aspect-ratio: 16/9;
+}
+
+.objectCover {
+  object-fit: cover;
+}
+
+.statusBadge {
+  color: #fff;
+  border-radius: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.statusGreen {
+  background-color: #22c55e;
+}
+.statusYellow {
+  background-color: #eab308;
+}
+.statusBlue {
+  background-color: #3b82f6;
+}
+.statusGray {
+  background-color: #6b7280;
+}
+
+.textSm {
+  font-size: 0.875rem;
+}
+.textGray500 {
+  color: #6b7280;
+}
+.textGray600 {
+  color: #4b5563;
+}
+.textGray900 {
+  color: #111827;
+}
+.textLg {
+  font-size: 1.125rem;
+}
+.fontBold {
+  font-weight: 700;
+}
+.fontSemibold {
+  font-weight: 600;
+}
+.mt4 {
+  margin-top: 1rem;
+}
+.mb2 {
+  margin-bottom: 0.5rem;
+}
+.mb4 {
+  margin-bottom: 1rem;
+}
+.mb8 {
+  margin-bottom: 2rem;
+}
+.spaceY2 > * + * {
+  margin-top: 0.5rem;
+}
+.wFull {
+  width: 100%;
+}
+.iconSm {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.25rem;
+}
+.iconStar {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.25rem;
+  color: #facc15; /* text-yellow-500 */
+}
+.textCenter {
+  text-align: center;
+}
+.py12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+} 
